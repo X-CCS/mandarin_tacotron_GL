@@ -5,6 +5,7 @@ import tensorflow as tf
 import threading
 import time
 import traceback
+from hparams import hparams
 from text import cmudict, text_to_sequence
 from util.infolog import log
 

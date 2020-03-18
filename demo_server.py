@@ -3,9 +3,10 @@ import falcon
 from hparams import hparams, hparams_debug_string
 import os
 from synthesizer import Synthesizer
+from util.txt2pinyin import text_to_pinyin
 
 
-html_body = '''<html><title>Demo</title>
+html_body = '''<html><title>mandarin_tacotron Demo</title>
 <style>
 body {padding: 16px; font-family: sans-serif; font-size: 14px; color: #444}
 input {font-size: 14px; padding: 8px 12px; outline: none; border: 1px solid #ddd}
@@ -67,7 +68,14 @@ class SynthesisResource:
   def on_get(self, req, res):
     if not req.params.get('text'):
       raise falcon.HTTPBadRequest()
-    res.data = synthesizer.synthesize(req.params.get('text'))
+    get_text = req.params.get('text')
+    print("get_text:", get_text)
+    print("get_text类型:", type(get_text))
+    sentence = text_to_pinyin(get_text)
+    print("sentence:", sentence)
+    print("sentence类型:", type(sentence))
+    # res.data = synthesizer.synthesize(req.params.get('text'))
+    res.data = synthesizer.synthesize(sentence)
     res.content_type = 'audio/wav'
 
 

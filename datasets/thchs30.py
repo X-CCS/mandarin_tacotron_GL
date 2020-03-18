@@ -26,12 +26,16 @@ def build_from_path(in_dir, out_dir, num_workers=1, tqdm=lambda x: x):
   futures = []
   index = 1
 
-  trn_files = glob.glob(os.path.join(in_dir, 'biaobei_48000', '*.trn'))
-
+  # trn_files = glob.glob(os.path.join(in_dir, 'biaobei_48000', '*.trn')) # 标贝数据集
+  trn_files = glob.glob(os.path.join(in_dir, 'data', '*.trn')) # 若是单独训练train文件则data改成train
+  print("trn_files:",trn_files)
   for trn in trn_files:
+    # print("trn:",trn)
     with open(trn) as f:
       pinyin = f.readline().strip('\n')
-      wav_file = trn[:-4] + '.wav'
+      # wav_file = trn[:-4] + '.wav' # 标贝数据集
+      wav_file = trn[:-4]
+      print("wav_file:",wav_file)
       task = partial(_process_utterance, out_dir, index, wav_file, pinyin)
       futures.append(executor.submit(task))
       index += 1

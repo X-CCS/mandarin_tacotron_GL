@@ -31,7 +31,7 @@ hparams = tf.contrib.training.HParams(
   decoder_depth=1024,
 
   # Training:
-  batch_size=32,
+  batch_size=64,
   adam_beta1=0.9,
   adam_beta2=0.999,
   initial_learning_rate=0.001,
